@@ -10,7 +10,7 @@ The server code is to be run on the rapsberry pi with the modules hooked up and 
 #### Email
 d00230925@student.dkit.ie
 #### Languages used
-- [Python] (https://www.python.org/)
+- [Python](https://www.python.org/)
 
 ## Demo
 https://youtu.be/BfiBAO4-EoQ
