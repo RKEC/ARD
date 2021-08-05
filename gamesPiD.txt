@@ -1,0 +1,8 @@
+valheim.exe
+warframe.exe
+destiny2.exe
+Cyberpunk2077.exe
+RuneScape.exe
+RDR2.exe
+GTA5.exe
+javaw.exe

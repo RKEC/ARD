@@ -4,11 +4,10 @@ import time
 import psutil
 
 HEADERSIZE = 10
+games = []
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#server's ip, port
-#port can be changed if already used (has to be changed on both server and client)
-s.connect(("server's ip", 1111)) 
+s.connect(("", 1110)) 
 
 def destroy():
         print("goodbye :)")
@@ -31,12 +30,17 @@ try:
                 print(full_msg[HEADERSIZE:])
 
                 if "active" in full_msg:
-                    for process in psutil.process_iter():
-                        #looks for minecraft's process id
-                        if process.name() == "javaw.exe":
-                            os.system("TASKKILL /im " + str(process.pid))
-                            print("Task successfully stopped")
-                              
+                    with open('gamesPiD.txt', 'r') as f:
+                        games = f.readlines()
+                    
+                
+                for process in psutil.process_iter():
+                     for game in games:
+                        print(process.name() + " " + game)
+                        if process.name().__eq__(game):
+                                os.system("TASKKILL /im " + str(process.pid) + "/T /F")
+                                process.kill()
+                                print("Task successfully stopped")
 
                 new_msg = True
                 full_msg = ''
@@ -44,4 +48,5 @@ try:
         print(full_msg)
 
 except KeyboardInterrupt:
-        destroy()   
+        destroy()
+    

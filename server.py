@@ -23,6 +23,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #port can be changed if already used (has to be changed on both server and client)
 s.bind(("0.0.0.0", 1111))
 s.listen(5)
+#destroy method turns off led and cleans gpio for next use
 def destroy():
         GPIO.output(red, 0)
         GPIO.output(green, 0)
@@ -32,10 +33,12 @@ def destroy():
 
 try:
         while True:
+            #accepts client address
                 clientsocket, address = s.accept()
                 print(f"Connection from {address} established")
                 message = ''
                 while True:
+                    #if the sensor picks up vibration; puts message as active, turns on led and sends data to client
                         if GPIO.input(4) == GPIO.HIGH:
                                 message = "active"
                                 GPIO.output(red, 255)
@@ -45,6 +48,7 @@ try:
                                 clientsocket.send(bytes(message, "utf-8"))
                                 time.sleep(5)
             
+                    #else message stays as idle and led blinks, waiting for vibration
                         else:
                                 message = "idle"
                                 GPIO.output(red, 0)
